@@ -19,7 +19,7 @@ import java.util.Set;
 public class Ficha {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @NotNull
     @Column(name = "fecha_entrada", nullable = false)

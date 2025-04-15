@@ -16,7 +16,7 @@ import java.util.Set;
 public class Cliente {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 100)
     @NotNull
