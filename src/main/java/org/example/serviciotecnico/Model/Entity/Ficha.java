@@ -53,4 +53,19 @@ public class Ficha {
     @OneToMany(mappedBy = "ficha")
     private Set<org.example.serviciotecnico.Model.Entity.Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
 
+
+    @Override
+    public String toString() {
+        return "Ficha{" +
+                "id=" + id +
+                ", fechaEntrada=" + fechaEntrada +
+                ", fechaSalida=" + fechaSalida +
+                ", roturaCliente='" + roturaCliente + '\'' +
+                ", diagnosticoTecnico='" + diagnosticoTecnico + '\'' +
+                ", presupuesto=" + presupuesto +
+                ", tecnicoApodo=" + tecnicoApodo +
+                ", cliente=" + cliente +
+                ", imagendispositivos=" + imagendispositivos +
+                '}';
+    }
 }

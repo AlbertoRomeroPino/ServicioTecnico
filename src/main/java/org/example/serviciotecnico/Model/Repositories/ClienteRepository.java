@@ -1,10 +1,38 @@
 package org.example.serviciotecnico.Model.Repositories;
 
 import org.example.serviciotecnico.Model.Entity.Cliente;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.awt.*;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+
+    /**
+     * Busca un cliente por su DNI.
+     *
+     * @param dni el DNI del cliente
+     * @return el cliente encontrado, o null si no se encuentra
+     */
+    @Query(
+            value = ("SELECT * FROM cliente AS cl WHERE cl.dni = ?1"),
+            nativeQuery = true
+    )
+    Cliente findByDni(String dni);
+
+    /**
+     * Busca un cliente por su nombre.
+     *
+     * @param nombre el nombre del cliente
+     * @return el cliente encontrado, o null si no se encuentra
+     */
+    @Query(
+            value = ("SELECT * FROM cliente AS cl WHERE cl.nombre = ?1"),
+            nativeQuery = true
+    )
+    List<Cliente> findByNombre(String nombre);
 
 }
