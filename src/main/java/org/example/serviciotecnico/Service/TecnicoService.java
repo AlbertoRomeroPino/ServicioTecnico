@@ -15,6 +15,7 @@ public class TecnicoService {
     @Autowired
     private TecnicoRepository tecnicoRepository;
 
+
     /**
      * Crea un nuevo tecnico en la base de datos.
      *
@@ -95,13 +96,27 @@ public class TecnicoService {
      * @param apodo del tecnico
      * @return el tecnico encontrado
      */
-    public Optional<Tecnico> findById(String apodo) {
+    public Tecnico findByApodo(String apodo) {
         Optional<Tecnico> tecnico = tecnicoRepository.findById(apodo);
         if (tecnico.isPresent()) {
-            return tecnico;
+            return tecnico.get();
         } else {
             throw new RecordNotFoundException("No hay tecnico con ese id: ", apodo);
         }
     }
 
+    /**
+     * Busca un tecnico por su numero de telefono
+     *
+     * @param numeroTelefono del tecnico
+     * @return el tecnico encontrado
+     */
+    public Tecnico findByNumeroTelefono(String numeroTelefono) {
+        Optional<Tecnico> tecnico = tecnicoRepository.findByNumeroTelefono(numeroTelefono);
+        if (tecnico.isPresent()) {
+            return tecnico.get();
+        } else {
+            throw new RecordNotFoundException("No hay tecnico con ese nuemro de telefono", numeroTelefono);
+        }
+    }
 }
