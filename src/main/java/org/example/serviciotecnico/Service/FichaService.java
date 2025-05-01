@@ -124,30 +124,30 @@ public class FichaService {
     /**
      * Busca una ficha por su id de cliente.
      *
-     * @param cliente que se quiere buscar.
+     * @param idCliente que se quiere buscar.
      * @return una lista de fichas encontradas.
      */
-    public List<Ficha> findByCliente(Cliente cliente) {
-        List<Ficha> fichas = fichaRepository.getFichaByIdDeCliente(cliente.getId());
+    public List<Ficha> findByCliente(Long idCliente) {
+        List<Ficha> fichas = fichaRepository.getFichaByIdDeCliente(idCliente);
         if (fichas.size() > 0) {
             return fichas;
         } else {
-            throw new RuntimeException("No hay ficha con ese cliente: " + cliente.getNombre());
+            throw new RuntimeException("No hay ficha con ese cliente de id: " + idCliente);
         }
     }
 
     /**
      * Busca una ficha por su id de tecnico.
      *
-     * @param tecnico que se quiere buscar.
+     * @param apodoTecnico que se quiere buscar.
      * @return una lista de fichas encontradas.
      */
-    public List<Ficha> findByTecnico(Tecnico tecnico) {
-        List<Ficha> fichas = fichaRepository.getFichasbyTecnico(tecnico.getApodo());
+    public List<Ficha> findByTecnico(String apodoTecnico) {
+        List<Ficha> fichas = fichaRepository.getFichasbyTecnico(apodoTecnico);
         if (fichas.size() > 0) {
             return fichas;
         } else {
-            throw new RuntimeException("No hay ficha con ese tecnico: " + tecnico.getNombre());
+            throw new RuntimeException("No hay ficha con ese tecnico: " + apodoTecnico  );
         }
     }
 

@@ -24,13 +24,14 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     Cliente findByDni(String dni);
 
     /**
-     * Busca un cliente por su nombre.
+     * Busca un cliente por su nombre. Se va a filtrar si pones una parte del nombre
      *
      * @param nombre el nombre del cliente
      * @return el cliente encontrado, o null si no se encuentra
      */
+
     @Query(
-            value = ("SELECT * FROM cliente AS cl WHERE cl.nombre = ?1"),
+            value = "SELECT * FROM cliente AS cl WHERE cl.nombre LIKE %?1%",
             nativeQuery = true
     )
     List<Cliente> findByNombre(String nombre);
