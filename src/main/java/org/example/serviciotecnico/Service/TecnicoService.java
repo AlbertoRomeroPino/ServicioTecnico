@@ -97,7 +97,7 @@ public class TecnicoService {
      * @return el tecnico encontrado
      */
     public Tecnico findByApodo(String apodo) {
-        Optional<Tecnico> tecnico = tecnicoRepository.findById(apodo);
+        Optional<Tecnico> tecnico = tecnicoRepository.findByApodo(apodo);
         if (tecnico.isPresent()) {
             return tecnico.get();
         } else {

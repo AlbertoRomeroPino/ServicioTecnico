@@ -139,7 +139,7 @@ public class FichaServiceController {
      * @throws RecordNotFoundException
      */
     @GetMapping("/fecha/{dia1}/{dia2}")
-    public ResponseEntity<List<Ficha>> getFichaByDia(@PathVariable LocalDate dia1, @PathVariable LocalDate dia2)
+    public ResponseEntity<List<Ficha>> getFichaEntreDias(@PathVariable LocalDate dia1, @PathVariable LocalDate dia2)
             throws RecordNotFoundException {
         List<Ficha> fichas = fichaService.findByDate(dia1, dia2);
         return ResponseEntity.ok(fichas);

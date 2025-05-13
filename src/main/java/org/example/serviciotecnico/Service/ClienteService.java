@@ -21,7 +21,7 @@ public class ClienteService {
      * @return el cliente creado
      */
     public Cliente createCliente(Cliente cliente) {
-        if (cliente == null) {
+            if (cliente == null) {
             throw new IllegalArgumentException("El cliente no puede ser nulo.");
         }
 

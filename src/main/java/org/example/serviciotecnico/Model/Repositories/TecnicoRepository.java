@@ -10,6 +10,12 @@ import java.util.Optional;
 @Repository
 public interface TecnicoRepository extends JpaRepository<Tecnico, String> {
 
+    @Query(
+            value = "SELECT * from Tecnico AS tec where tec.apodo = ?1",
+            nativeQuery = true
+    )
+    Optional<Tecnico> findByApodo(String apodo);
+
     /**
      * Busca un tecnico por su numero de telefono
      *

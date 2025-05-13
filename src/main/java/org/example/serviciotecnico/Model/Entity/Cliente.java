@@ -1,5 +1,6 @@
 package org.example.serviciotecnico.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -31,6 +32,7 @@ public class Cliente {
     @Column(name = "dni", length = 20)
     private String dni;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private Set<org.example.serviciotecnico.Model.Entity.Ficha> fichas = new LinkedHashSet<>();
 

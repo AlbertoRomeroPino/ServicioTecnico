@@ -1,8 +1,6 @@
 package org.example.serviciotecnico.Service;
 
-import org.example.serviciotecnico.Model.Entity.Cliente;
 import org.example.serviciotecnico.Model.Entity.Ficha;
-import org.example.serviciotecnico.Model.Entity.Tecnico;
 import org.example.serviciotecnico.Model.Repositories.FichaRepository;
 import org.example.serviciotecnico.Utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;

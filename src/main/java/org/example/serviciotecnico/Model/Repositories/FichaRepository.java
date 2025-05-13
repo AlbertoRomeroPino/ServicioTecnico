@@ -30,7 +30,7 @@ public interface FichaRepository extends JpaRepository<Ficha, Long> {
      * @return una lista de fichas.
      */
     @Query(
-            value = ("Select * from Ficha As fi where fi.tecnico_apodo_id = ?1"),
+            value = ("Select * from Ficha As fi where fi.tecnico_apodo = ?1"),
             nativeQuery = true
     )
     List<Ficha> getFichasbyTecnico(String idTecnico);

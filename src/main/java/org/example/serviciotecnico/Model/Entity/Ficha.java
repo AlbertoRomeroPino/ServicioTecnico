@@ -1,5 +1,6 @@
 package org.example.serviciotecnico.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -39,17 +40,20 @@ public class Ficha {
     @Column(name = "presupuesto", precision = 10, scale = 2)
     private BigDecimal presupuesto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "tecnico_apodo")
     private org.example.serviciotecnico.Model.Entity.Tecnico tecnicoApodo;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "ficha")
     private Set<org.example.serviciotecnico.Model.Entity.Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
 

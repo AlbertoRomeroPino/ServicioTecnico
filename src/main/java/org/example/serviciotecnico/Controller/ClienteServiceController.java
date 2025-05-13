@@ -40,11 +40,9 @@ public class ClienteServiceController {
      *
      * @param cliente que se va a almacenar
      * @return el cliente creado
-     * @throws RecordNotFoundException
      */
-    @PostMapping("/create")
-    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente)
-            throws RecordNotFoundException {
+    @PostMapping
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
 
         Cliente clienteTemp = clienteService.createCliente(cliente);
         return ResponseEntity.ok(clienteTemp);

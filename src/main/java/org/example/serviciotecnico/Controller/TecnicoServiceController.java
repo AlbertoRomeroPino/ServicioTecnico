@@ -83,7 +83,7 @@ public class TecnicoServiceController {
      * @return el tecnico encontrado.
      * @throws RecordNotFoundException
      */
-    @GetMapping("/{apodo}")
+    @GetMapping("/byApodo/{apodo}")
     public ResponseEntity<Tecnico> getTecnico(@PathVariable String apodo)
             throws RecordNotFoundException {
 
@@ -98,7 +98,7 @@ public class TecnicoServiceController {
      * @return el tecnico encontrado.
      * @throws RecordNotFoundException
      */
-    @GetMapping("/{phone}")
+    @GetMapping("/byPhone/{numeroTelefono}")
     public ResponseEntity<Tecnico> getTecnicoByPhone(@PathVariable String numeroTelefono)
         throws RecordNotFoundException {
 
