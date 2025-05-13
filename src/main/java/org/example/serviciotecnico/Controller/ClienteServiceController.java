@@ -45,6 +45,8 @@ public class ClienteServiceController {
     public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
 
         Cliente clienteTemp = clienteService.createCliente(cliente);
+
+
         return ResponseEntity.ok(clienteTemp);
     }
 
@@ -55,10 +57,11 @@ public class ClienteServiceController {
      * @return el cliente actualizado
      * @throws RecordNotFoundException
      */
-    @PutMapping("/update")
-    public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente)
+    @PutMapping("{id}")
+    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente cliente)
             throws RecordNotFoundException {
 
+        cliente.setId(id);
         Cliente clienteTemp = clienteService.updateCliente(cliente);
         return ResponseEntity.ok(clienteTemp);
     }

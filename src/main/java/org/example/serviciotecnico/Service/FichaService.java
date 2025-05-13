@@ -1,6 +1,8 @@
 package org.example.serviciotecnico.Service;
 
+import org.example.serviciotecnico.Model.Entity.Cliente;
 import org.example.serviciotecnico.Model.Entity.Ficha;
+import org.example.serviciotecnico.Model.Entity.Tecnico;
 import org.example.serviciotecnico.Model.Repositories.FichaRepository;
 import org.example.serviciotecnico.Utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,10 @@ public class FichaService {
 
     @Autowired
     private FichaRepository fichaRepository;
+    @Autowired
+    private ClienteService clienteRepository;
+    @Autowired
+    private TecnicoService tecnicoRepository;
 
     /**
      * Crea una nueva ficha en la base de datos.
@@ -29,10 +35,23 @@ public class FichaService {
         }
 
         try {
+            // Obtener cliente completo
+            if (ficha.getCliente() != null && ficha.getCliente().getId() != null) {
+                Cliente clienteCompleto = clienteRepository.getClienteById(ficha.getCliente().getId());
+                ficha.setCliente(clienteCompleto);
+            }
+
+            // Obtener técnico completo
+            if (ficha.getTecnicoApodo() != null && ficha.getTecnicoApodo().getApodo() != null) {
+                Tecnico tecnicoCompleto = tecnicoRepository.findByApodo(ficha.getTecnicoApodo().getApodo());
+                ficha.setTecnicoApodo(tecnicoCompleto);
+            }
+
             return fichaRepository.save(ficha);
         } catch (Exception e) {
             throw new RuntimeException("Error al guardar la ficha en la base de datos.", e);
         }
+
     }
 
     /**
@@ -46,7 +65,7 @@ public class FichaService {
             throw new IllegalArgumentException("La ficha no puede ser nula.");
         }
 
-        Optional<Ficha> fichaOptional = fichaRepository.findById(ficha.getId());
+        Optional<Ficha> fichaOptional = fichaRepository.findById(Long.valueOf(ficha.getId()));
 
         if (fichaOptional != null) {
             Ficha newFicha = fichaOptional.get();

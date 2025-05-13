@@ -24,7 +24,7 @@ public class TecnicoServiceController {
      * @return HttpStatus.ACCEPTED si se ha eliminado el tecnico
      * HttpStatus.NOT_FOUND si no se ha encontrado el tecnico.
      */
-    @DeleteMapping("/delete/{apodo}")
+    @DeleteMapping("/{apodo}")
     public HttpStatus deleteTecnico(@PathVariable String apodo) {
         try {
             tecnicoService.deleteTecnico(apodo);
@@ -41,7 +41,7 @@ public class TecnicoServiceController {
      * @return el tecnico creado.
      * @throws RecordNotFoundException
      */
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Tecnico> createTecnico(@RequestBody Tecnico tecnico)
             throws RecordNotFoundException {
 
@@ -56,7 +56,7 @@ public class TecnicoServiceController {
      * @return el tecnico actualizado.
      * @throws RecordNotFoundException
      */
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<Tecnico> updateTecnico(@RequestBody Tecnico tecnico)
             throws RecordNotFoundException {
 

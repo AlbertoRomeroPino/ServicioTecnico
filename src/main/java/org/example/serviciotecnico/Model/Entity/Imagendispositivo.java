@@ -1,8 +1,10 @@
 package org.example.serviciotecnico.Model.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -22,11 +24,12 @@ public class Imagendispositivo {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ficha_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private Ficha ficha;
 
+    @Size(max = 255)
     @NotNull
     @Column(name = "foto", nullable = false)
-    private byte[] foto;
+    private String foto;
 
 }

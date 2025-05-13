@@ -1,6 +1,9 @@
 package org.example.serviciotecnico.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +19,7 @@ import java.util.Set;
 @Table(name = "cliente")
 public class Cliente {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -32,8 +36,8 @@ public class Cliente {
     @Column(name = "dni", length = 20)
     private String dni;
 
-    @JsonBackReference
     @OneToMany(mappedBy = "cliente")
-    private Set<org.example.serviciotecnico.Model.Entity.Ficha> fichas = new LinkedHashSet<>();
+    @JsonManagedReference("cliente-ficha")
+    private Set<Ficha> fichas = new LinkedHashSet<>();
 
 }

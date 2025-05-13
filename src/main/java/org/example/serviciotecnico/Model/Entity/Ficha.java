@@ -1,6 +1,10 @@
 package org.example.serviciotecnico.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,12 +17,14 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Getter
 @Setter
 @Entity
 @Table(name = "ficha")
 public class Ficha {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -40,36 +46,23 @@ public class Ficha {
     @Column(name = "presupuesto", precision = 10, scale = 2)
     private BigDecimal presupuesto;
 
-    @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "tecnico_apodo")
-    private org.example.serviciotecnico.Model.Entity.Tecnico tecnicoApodo;
-
     @NotNull
-    @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonBackReference("cliente-ficha")
+
     private Cliente cliente;
 
-    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "tecnico_apodo")
+    @JsonBackReference("tecnico-ficha")
+
+    private Tecnico tecnicoApodo;
+
     @OneToMany(mappedBy = "ficha")
-    private Set<org.example.serviciotecnico.Model.Entity.Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
+    @JsonIgnore
+    private Set<Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
 
-
-    @Override
-    public String toString() {
-        return "Ficha{" +
-                "id=" + id +
-                ", fechaEntrada=" + fechaEntrada +
-                ", fechaSalida=" + fechaSalida +
-                ", roturaCliente='" + roturaCliente + '\'' +
-                ", diagnosticoTecnico='" + diagnosticoTecnico + '\'' +
-                ", presupuesto=" + presupuesto +
-                ", tecnicoApodo=" + tecnicoApodo +
-                ", cliente=" + cliente +
-                ", imagendispositivos=" + imagendispositivos +
-                '}';
-    }
 }

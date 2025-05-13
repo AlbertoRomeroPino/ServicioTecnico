@@ -1,8 +1,12 @@
 package org.example.serviciotecnico.Controller;
 
 import org.example.serviciotecnico.Exceptions.RecordNotFoundException;
+import org.example.serviciotecnico.Model.Entity.Cliente;
 import org.example.serviciotecnico.Model.Entity.Ficha;
+import org.example.serviciotecnico.Model.Entity.Tecnico;
+import org.example.serviciotecnico.Service.ClienteService;
 import org.example.serviciotecnico.Service.FichaService;
+import org.example.serviciotecnico.Service.TecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +22,7 @@ public class FichaServiceController {
 
     @Autowired
     FichaService fichaService;
+
 
     /**
      * Elimina una ficha de la base de datos.
@@ -41,7 +46,7 @@ public class FichaServiceController {
      * @return la ficha actualizada.
      * @throws RecordNotFoundException
      */
-    @PostMapping("/update")
+    @PutMapping
     public ResponseEntity<Ficha> updateFicha(@RequestBody Ficha ficha)
             throws RecordNotFoundException {
 
@@ -56,11 +61,14 @@ public class FichaServiceController {
      * @return la ficha creada.
      * @throws RecordNotFoundException
      */
-    @PutMapping("/create")
+    @PostMapping
     public ResponseEntity<Ficha> createFicha(@RequestBody Ficha ficha)
             throws RecordNotFoundException {
 
+
+
         Ficha fichaTemp = fichaService.createFicha(ficha);
+
         return ResponseEntity.ok(fichaTemp);
     }
 
