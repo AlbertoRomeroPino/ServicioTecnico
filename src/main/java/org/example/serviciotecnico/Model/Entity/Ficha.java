@@ -1,10 +1,6 @@
 package org.example.serviciotecnico.Model.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -22,6 +18,8 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "ficha")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Ficha {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +49,7 @@ public class Ficha {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "cliente_id", nullable = false)
     @JsonBackReference("cliente-ficha")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
     private Cliente cliente;
 
@@ -58,6 +57,8 @@ public class Ficha {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "tecnico_apodo")
     @JsonBackReference("tecnico-ficha")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 
     private Tecnico tecnicoApodo;
 

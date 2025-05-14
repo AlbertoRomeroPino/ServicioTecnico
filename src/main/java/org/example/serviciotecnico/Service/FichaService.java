@@ -35,19 +35,27 @@ public class FichaService {
         }
 
         try {
-            // Obtener cliente completo
             if (ficha.getCliente() != null && ficha.getCliente().getId() != null) {
                 Cliente clienteCompleto = clienteRepository.getClienteById(ficha.getCliente().getId());
                 ficha.setCliente(clienteCompleto);
             }
 
-            // Obtener técnico completo
             if (ficha.getTecnicoApodo() != null && ficha.getTecnicoApodo().getApodo() != null) {
                 Tecnico tecnicoCompleto = tecnicoRepository.findByApodo(ficha.getTecnicoApodo().getApodo());
                 ficha.setTecnicoApodo(tecnicoCompleto);
             }
 
-            return fichaRepository.save(ficha);
+            if (Utils.compareDates(ficha.getFechaEntrada(), ficha.getFechaSalida())){
+                LocalDate dateTemp = ficha.getFechaEntrada();
+                ficha.setFechaEntrada(ficha.getFechaSalida());
+                ficha.setFechaSalida(dateTemp);
+                return fichaRepository.save(ficha);
+            }else{
+
+                return fichaRepository.save(ficha);
+            }
+
+
         } catch (Exception e) {
             throw new RuntimeException("Error al guardar la ficha en la base de datos.", e);
         }

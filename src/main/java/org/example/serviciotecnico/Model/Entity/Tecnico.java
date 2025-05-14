@@ -1,7 +1,6 @@
 package org.example.serviciotecnico.Model.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +15,8 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "tecnico")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Tecnico {
     @Id
     @Size(max = 50)
@@ -38,6 +39,8 @@ public class Tecnico {
 
     @OneToMany(mappedBy = "tecnicoApodo")
     @JsonManagedReference("tecnico-ficha")
+    @JsonIgnoreProperties({"tecnicoApodo", "hibernateLazyInitializer", "handler"})
+
 
     private Set<Ficha> fichas = new LinkedHashSet<>();
 

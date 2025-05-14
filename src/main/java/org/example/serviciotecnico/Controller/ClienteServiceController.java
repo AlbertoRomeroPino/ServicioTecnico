@@ -25,7 +25,7 @@ public class ClienteServiceController {
      * @return HttpStatus.ACCEPTED si se ha eliminado el tecnico
      * HttpStatus.NOT_FOUND si no se ha encontrado el tecnico.
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public HttpStatus deleteCliente(@PathVariable Long id) {
         try {
             clienteService.deleteCliente(id);

@@ -1,12 +1,8 @@
 package org.example.serviciotecnico.Controller;
 
 import org.example.serviciotecnico.Exceptions.RecordNotFoundException;
-import org.example.serviciotecnico.Model.Entity.Cliente;
 import org.example.serviciotecnico.Model.Entity.Ficha;
-import org.example.serviciotecnico.Model.Entity.Tecnico;
-import org.example.serviciotecnico.Service.ClienteService;
 import org.example.serviciotecnico.Service.FichaService;
-import org.example.serviciotecnico.Service.TecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +25,7 @@ public class FichaServiceController {
      * @param id de la ficha que se va a borrar.
      * @return HttpStatus.ACCEPTED si se ha eliminado la ficha
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public HttpStatus deleteFicha(@PathVariable Long id) {
 
         try {
@@ -46,9 +42,11 @@ public class FichaServiceController {
      * @return la ficha actualizada.
      * @throws RecordNotFoundException
      */
-    @PutMapping
-    public ResponseEntity<Ficha> updateFicha(@RequestBody Ficha ficha)
+    @PutMapping("{id}")
+    public ResponseEntity<Ficha> updateFicha(@PathVariable Long id, @RequestBody Ficha ficha)
             throws RecordNotFoundException {
+
+        ficha.setId(id);
 
         Ficha fichaTemp = fichaService.updateFicha(ficha);
         return ResponseEntity.ok(fichaTemp);
@@ -64,8 +62,6 @@ public class FichaServiceController {
     @PostMapping
     public ResponseEntity<Ficha> createFicha(@RequestBody Ficha ficha)
             throws RecordNotFoundException {
-
-
 
         Ficha fichaTemp = fichaService.createFicha(ficha);
 

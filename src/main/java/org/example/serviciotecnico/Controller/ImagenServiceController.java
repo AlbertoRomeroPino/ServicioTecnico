@@ -17,7 +17,7 @@ public class ImagenServiceController {
     @Autowired
     ImagenService imagenService;
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public HttpStatus deleteImagen(@PathVariable Long id){
         try{
             imagenService.deleteImagen(id);
@@ -27,7 +27,7 @@ public class ImagenServiceController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Imagendispositivo> createImagen(@RequestBody Imagendispositivo imagen)
     throws RecordNotFoundException {
 
