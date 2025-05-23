@@ -31,7 +31,10 @@ public class ImagenServiceController {
     public ResponseEntity<Imagendispositivo> createImagen(@RequestBody Imagendispositivo imagen)
     throws RecordNotFoundException {
 
+
         Imagendispositivo imagenTemp = imagenService.createImagen(imagen);
+
+
         return ResponseEntity.ok(imagenTemp);
     }
 

@@ -60,16 +60,30 @@ public class ImagenService {
                 throw new IllegalArgumentException("La ficha con ID " + imagen.getFicha().getId() + " no existe.");
             }
 
+            // --- NUEVO: Guardar la imagen en la carpeta 'imagen' como PNG ---
+            byte[] imageBytes = java.util.Base64.getDecoder().decode(imagen.getFoto());
+            String nombreArchivo = java.util.UUID.randomUUID() + ".png";
+            String ruta = "imagen/" + nombreArchivo;
+
+            // Decodificar base64 a BufferedImage y guardar como PNG
+            try (java.io.ByteArrayInputStream bis = new java.io.ByteArrayInputStream(imageBytes)) {
+                java.awt.image.BufferedImage bufferedImage = javax.imageio.ImageIO.read(bis);
+                if (bufferedImage == null) {
+                    throw new IllegalArgumentException("El contenido base64 no es una imagen válida.");
+                }
+                java.io.File outputfile = new java.io.File(ruta);
+                javax.imageio.ImageIO.write(bufferedImage, "png", outputfile);
+            }
+
+            // Guardar solo la ruta en la base de datos
+            imagen.setFoto(ruta);
+
             imagen.setFicha(fichaCompleta);
             return imagenRepository.save(imagen);
 
         } catch (Exception e) {
-            if (e instanceof IllegalArgumentException) {
-                throw e;
-            }
             throw new RuntimeException("Error al guardar la imagen en la base de datos.", e);
         }
-
     }
 
     /**

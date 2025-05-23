@@ -59,11 +59,10 @@ public class Ficha {
     @JsonBackReference("tecnico-ficha")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-
     private Tecnico tecnicoApodo;
 
-    @OneToMany(mappedBy = "ficha")
-    @JsonIgnore
-    private Set<Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "ficha")
+//
+//    private Set<Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
 
 }
