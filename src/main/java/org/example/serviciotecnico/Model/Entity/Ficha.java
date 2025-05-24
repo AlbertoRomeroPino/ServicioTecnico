@@ -61,8 +61,8 @@ public class Ficha {
 
     private Tecnico tecnicoApodo;
 
-//    @OneToMany(mappedBy = "ficha")
-//
-//    private Set<Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "ficha")
+
+    private Set<Imagendispositivo> imagendispositivos = new LinkedHashSet<>();
 
 }
