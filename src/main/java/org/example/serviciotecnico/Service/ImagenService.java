@@ -7,6 +7,7 @@ import org.example.serviciotecnico.Model.Repositories.ImagenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,20 +18,25 @@ public class ImagenService {
     @Autowired
     private ImagenRepository imagenRepository;
     @Autowired
-    FichaService fichaService;
+    private FichaService fichaService;
 
     /**
      * Elimina una imagen de la base de datos.
      *
      * @param id de la imagen que se va a borrar.
      */
-    public void deleteImagen(Long id) {
-        Optional<Imagendispositivo> imagendispositivo = imagenRepository.findById(id);
-        if (imagendispositivo.isPresent()) {
-            imagenRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("No hay imagen con ese id: " + id);
+    public void deleteImagen(Long id) throws RecordNotFoundException {
+        Optional<Imagendispositivo> imagen = imagenRepository.findById(id);
+
+        // Borrar archivo físico
+        File archivo = new File(imagen.get().getFoto());
+        if (archivo.exists()) {
+            archivo.delete();
         }
+
+        // Borrar registro en base de datos
+        imagenRepository.delete(imagen.get());
+
     }
 
     /**
