@@ -1,0 +1,183 @@
+@startuml
+class org.example.serviciotecnico.Controller.TecnicoServiceController {
+~ TecnicoService tecnicoService
++ HttpStatus deleteTecnico(String)
++ ResponseEntity<Tecnico> createTecnico(Tecnico)
++ ResponseEntity<Tecnico> updateTecnico(Tecnico)
++ ResponseEntity<List<Tecnico>> getTecnico()
++ ResponseEntity<Tecnico> getTecnico(String)
++ ResponseEntity<Tecnico> getTecnicoByPhone(String)
+}
+
+
+interface org.example.serviciotecnico.Model.Repositories.FichaRepository {
+~ List<Ficha> getFichaByIdDeCliente(Long)
+~ List<Ficha> getFichasbyTecnico(String)
+~ List<Ficha> getFichaByDay(LocalDate)
+~ List<Ficha> findByDate(LocalDate,LocalDate)
+}
+
+class org.example.serviciotecnico.Utils.CorsConfig {
++ void addCorsMappings(CorsRegistry)
+}
+
+class org.example.serviciotecnico.Service.ImagenService {
+- ImagenRepository imagenRepository
+- FichaService fichaService
++ void deleteImagen(Long)
++ Imagendispositivo createImagen(Imagendispositivo)
++ List<Imagendispositivo> getAllByFicha(Long)
+}
+
+
+interface org.example.serviciotecnico.Model.Repositories.ClienteRepository {
+~ Cliente findByDni(String)
+~ List<Cliente> findByNombre(String)
+}
+
+class org.example.serviciotecnico.Model.Entity.Ficha {
+- Long id
+- LocalDate fechaEntrada
+- LocalDate fechaSalida
+- String roturaCliente
+- String diagnosticoTecnico
+- BigDecimal presupuesto
+- Cliente cliente
+- Tecnico tecnicoApodo
+- Set<Imagendispositivo> imagendispositivos
+}
+
+interface org.example.serviciotecnico.Model.Repositories.ImagenRepository {
+~ List<Imagendispositivo> findByFichaId(Long)
+}
+
+class org.example.serviciotecnico.Utils.Utils {
++ {static} boolean compareDates(LocalDate,LocalDate)
+}
+
+class org.example.serviciotecnico.Controller.ClienteServiceController {
+~ ClienteService clienteService
++ HttpStatus deleteCliente(Long)
++ ResponseEntity<Cliente> createCliente(Cliente)
++ ResponseEntity<Cliente> updateCliente(Long,Cliente)
++ ResponseEntity<List<Cliente>> getClientes()
++ ResponseEntity<Cliente> getClienteById(Long)
++ ResponseEntity<List<Cliente>> getClienteByNombre(String)
++ ResponseEntity<Cliente> getClienteByDni(String)
+}
+
+
+class org.example.serviciotecnico.Controller.FichaServiceController {
+~ FichaService fichaService
++ HttpStatus deleteFicha(Long)
++ ResponseEntity<Ficha> updateFicha(Long,Ficha)
++ ResponseEntity<Ficha> createFicha(Ficha)
++ ResponseEntity<List<Ficha>> getFicha()
++ ResponseEntity<Ficha> getFichaById(Long)
++ ResponseEntity<List<Ficha>> getFichaByCLiente(Long)
++ ResponseEntity<List<Ficha>> getFichaByTecnico(String)
++ ResponseEntity<List<Ficha>> getFichaByDia(LocalDate)
++ ResponseEntity<List<Ficha>> getFichaEntreDias(LocalDate,LocalDate)
+}
+
+
+class org.example.serviciotecnico.Model.Entity.Imagendispositivo {
+- Long id
+- Ficha ficha
+- String foto
+}
+
+class org.example.serviciotecnico.Service.FichaService {
+- FichaRepository fichaRepository
+- ClienteService clienteRepository
+- TecnicoService tecnicoRepository
++ Ficha createFicha(Ficha)
++ Ficha updateFicha(Ficha)
++ Ficha deleteFicha(Long)
++ List<Ficha> findAll()
++ Ficha findById(Long)
++ List<Ficha> findByCliente(Long)
++ List<Ficha> findByTecnico(String)
++ List<Ficha> findByOneDay(LocalDate)
++ List<Ficha> findByDate(LocalDate,LocalDate)
+}
+
+
+class org.example.serviciotecnico.Controller.ImagenServiceController {
+~ ImagenService imagenService
+~ FichaService fichaService
++ HttpStatus deleteImagen(Long)
++ ResponseEntity<Imagendispositivo> createImagen(MultipartFile,Long)
++ ResponseEntity<List<Imagendispositivo>> getImagenById(Long)
+}
+
+
+class org.example.serviciotecnico.Service.TecnicoService {
+- TecnicoRepository tecnicoRepository
++ Tecnico createTecnico(Tecnico)
++ Tecnico updateTecnico(Tecnico)
++ Tecnico deleteTecnico(String)
++ List<Tecnico> findAll()
++ Tecnico findByApodo(String)
++ Tecnico findByNumeroTelefono(String)
+}
+
+
+class org.example.serviciotecnico.Model.Entity.Cliente {
+- Long id
+- String nombre
+- String numeroTelefono
+- String dni
+- Set<Ficha> fichas
+}
+
+class org.example.serviciotecnico.Model.Entity.Tecnico {
+- String apodo
+- String nombre
+- String apellido
+- String numeroTelefono
+- Set<Ficha> fichas
+}
+
+class org.example.serviciotecnico.Service.ClienteService {
+- ClienteRepository clienteRepository
++ Cliente createCliente(Cliente)
++ Cliente updateCliente(Cliente)
++ Cliente deleteCliente(Long)
++ List<Cliente> getAllClientes()
++ Cliente getClienteById(Long)
++ List<Cliente> getClienteByNombre(String)
++ Cliente getClienteByDni(String)
+}
+
+
+class org.example.serviciotecnico.ServicioTecnicoApplicationTests {
+~ void contextLoads()
+}
+
+interface org.example.serviciotecnico.Model.Repositories.TecnicoRepository {
+~ Optional<Tecnico> findByApodo(String)
+~ Optional<Tecnico> findByNumeroTelefono(String)
+}
+
+class org.example.serviciotecnico.Exceptions.RecordNotFoundException {
+- String exceptionDetail
+- Object fieldValue
++ String getExceptionDetail()
++ Object getFieldValue()
+}
+
+
+class org.example.serviciotecnico.ServicioTecnicoApplication {
++ {static} void main(String[])
+}
+
+
+
+org.springframework.data.jpa.repository.JpaRepository <|-- org.example.serviciotecnico.Model.Repositories.FichaRepository
+org.springframework.web.servlet.config.annotation.WebMvcConfigurer <|.. org.example.serviciotecnico.Utils.CorsConfig
+org.springframework.data.jpa.repository.JpaRepository <|-- org.example.serviciotecnico.Model.Repositories.ClienteRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- org.example.serviciotecnico.Model.Repositories.ImagenRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- org.example.serviciotecnico.Model.Repositories.TecnicoRepository
+org.example.serviciotecnico.Exceptions.RuntimeException <|-- org.example.serviciotecnico.Exceptions.RecordNotFoundException
+@enduml
